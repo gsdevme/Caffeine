@@ -6,7 +6,6 @@ namespace Caffeine\Twitch;
  * Class SocketAdapter
  *
  * @package Caffeine\Twitch
- * @codeCoverageIgnore
  */
 class SocketAdapter
 {

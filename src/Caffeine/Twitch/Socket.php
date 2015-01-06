@@ -8,7 +8,6 @@ namespace Caffeine\Twitch;
  * Wraps fsockopen for type hinting
  *
  * @package Caffeine\Twitch
- * @codeCoverageIgnore
  */
 class Socket
 {
