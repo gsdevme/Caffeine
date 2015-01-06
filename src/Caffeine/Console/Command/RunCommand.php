@@ -12,34 +12,26 @@ use Symfony\Component\Console\Output\OutputInterface;
  * Class Command
  * @package Caffeine
  */
-class RunCommand extends Console\Command\Command
+class RunCommand extends Command
 {
-    const TITLE = <<<TITLE
-#####################################
-# Caffeine Twitch IRC Bot           #
-# --------------------------------- #
-#                                   #
-# Created by: Gavin Staniforth      #
-# For use with Twitch.tv            #
-#####################################
-
-TITLE;
-
-    const WRITE_LINE_INFO = '<info>%s</info>';
+    const WRITE_LINE_INFO    = '<info>%s</info>';
     const WRITE_LINE_COMMENT = '<comment>%s</comment>';
 
     const ARGUMENT_TWITCH_CHANNEL = 'twitch-channel-name';
-    const ARGUMENT_OATUH_TOKEN = 'bot-oauth-token';
-    const ARGUMENT_USERNAME = 'username';
-    const ARGUMENT_TIMEZONE = 'timezone';
-    const ARGUMENT_CONFIG = 'config';
-    const ARGUMENT_ADMIN_USERS = 'admin-users';
+    const ARGUMENT_OATUH_TOKEN    = 'bot-oauth-token';
+    const ARGUMENT_USERNAME       = 'username';
+    const ARGUMENT_TIMEZONE       = 'timezone';
+    const ARGUMENT_CONFIG         = 'config';
+    const ARGUMENT_ADMIN_USERS    = 'admin-users';
 
+    /**
+     * @inheritdoc
+     */
     protected function configure()
     {
         $this
-            ->setName('run')
-            ->setDescription('Caffeine Twitch.tv chat bot.')
+            ->setName('create')
+            ->setDescription('Spawns a Caffeine bot into the background.')
             ->addArgument(
                 self::ARGUMENT_TWITCH_CHANNEL,
                 InputArgument::REQUIRED,
@@ -56,6 +48,51 @@ TITLE;
     }
 
     /**
+     * @inheritdoc
+     */
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        $channel = $input->getArgument(self::ARGUMENT_TWITCH_CHANNEL);
+
+        $this->welcomeMessage($output);
+        $this->writeInfo($output, ' -Twitch Channel: ' . $channel);
+        $this->setProcessTitle('Caffeine-' . $channel);
+
+        $config = $this->getConfiguration($input, $channel);
+
+        $this->writeInfo($output, ' -Using configuration file: ' . $config);
+        $this->writeInfo($output, ' -Spawning Caffeine for channel: ' . $channel);
+
+        $this->createProcess($channel, $config, $output);
+    }
+
+    /**
+     * @param InputInterface $input
+     * @param $channel
+     * @return mixed|string
+     */
+    private function getConfiguration(InputInterface $input, $channel)
+    {
+        $config = getcwd() . '/' . $this->getConfigFilename($input, $channel);
+
+        $this->createConfigurationIfDoesntExist($config);
+
+        return $config;
+    }
+
+    /**
+     * @param $channel
+     * @param $config
+     * @param OutputInterface $output
+     */
+    private function createProcess($channel, $config, OutputInterface $output)
+    {
+        $status = Caffeine\Console\ProcessSpawnForkFactory::create($channel, $config);
+
+        $this->writeInfo($output, ' -Process Spawned, PID: ' . $status['pid']);
+    }
+
+    /**
      * @param array $arguments
      */
     private function addOptionalArguments(array $arguments)
@@ -66,49 +103,13 @@ TITLE;
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return int|null|void
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
-        $this->writeComment($output, self::TITLE);
-
-        $channel = $input->getArgument(self::ARGUMENT_TWITCH_CHANNEL);
-
-        $this->writeInfo($output, ' -Twitch Channel: ' . $channel);
-        $this->setProcessTitle('Caffeine-' . $channel);
-
-        $path   = getcwd() . '/';
-        $config = $this->getConfigFileLocation($input, $channel);
-
-        $this->createConfigurationIfDoesntExist($path, $config);
-
-        $this->writeInfo($output, ' -Spawning Caffeine for channel: ' . $channel);
-
-        Caffeine\Console\ProcessSpawnFactory::create($channel);
-    }
-
-    /**
-     * @param InputInterface $input
-     * @param array $config
-     */
-    private function getOptionalArguments(InputInterface $input, array $config)
-    {
-        if ($input->getArgument(self::ARGUMENT_OATUH_TOKEN)) {
-            $config[self::ARGUMENT_OATUH_TOKEN] = $input->getArgument(self::ARGUMENT_OATUH_TOKEN);
-        }
-    }
-
-    /**
-     * @param string $path
      * @param $config
      * @return bool
      */
-    private function createConfigurationIfDoesntExist($path, $config)
+    private function createConfigurationIfDoesntExist($config)
     {
-        if (!file_exists($path . $config)) {
-            touch($path . $config);
+        if (!file_exists($config)) {
+            touch($config);
             return true;
         }
 
@@ -120,32 +121,12 @@ TITLE;
      * @param $channel
      * @return mixed|string
      */
-    private function getConfigFileLocation(InputInterface $input, $channel)
+    private function getConfigFilename(InputInterface $input, $channel)
     {
         if (!$input->getArgument(self::ARGUMENT_CONFIG)) {
             return sprintf('caffeine-%s.json', $channel);
         }
 
         return $input->getArgument(self::ARGUMENT_CONFIG);
-    }
-
-    /**
-     * @param OutputInterface $output
-     * @param string $buffer
-     * @return mixed
-     */
-    private function writeInfo(OutputInterface $output, $buffer)
-    {
-        return $output->writeln(sprintf(self::WRITE_LINE_INFO, $buffer));
-    }
-
-    /**
-     * @param OutputInterface $output
-     * @param string $buffer
-     * @return mixed
-     */
-    private function writeComment(OutputInterface $output, $buffer)
-    {
-        return $output->writeln(sprintf(self::WRITE_LINE_COMMENT, $buffer));
     }
 }

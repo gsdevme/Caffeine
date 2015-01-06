@@ -19,7 +19,10 @@ class Application extends BaseApplication
 
     public function doRun(InputInterface $input, OutputInterface $output)
     {
-        $this->add(new Command\RunCommand());
+        $this->addCommands([
+            new Command\RunCommand(),
+            new Command\ShowCommand()
+        ]);
 
         return parent::doRun($input, $output);
     }

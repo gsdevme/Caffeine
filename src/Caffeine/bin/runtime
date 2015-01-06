@@ -9,11 +9,4 @@ $runtime
     ->bootstrap()
     ->environment();
 
-
-
-
-/*Caffeine\Caffeine::run(new Caffeine\Config([
-    'channel'  => 'test',
-    'username' => 'test',
-    'auth'     => 'test'
-]));*/
+sleep(300);
