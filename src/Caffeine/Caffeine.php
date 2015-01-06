@@ -14,7 +14,7 @@ class Caffeine
      */
     public static function run(Config $config, $forever = true)
     {
-        while(true){
+        while (true) {
             self::sleepForZeroPointZeroPointFiveSeconds();
         }
 

@@ -2,6 +2,7 @@
 
 namespace Caffeine\Console;
 
+use Caffeine\Exception\Console\ProcessSpawnForkFailureException;
 use Caffeine\Runtime;
 
 /**
@@ -17,21 +18,11 @@ class ProcessSpawnForkFactory
      * @param $channel
      * @param $config
      * @return array
-     * @throws \RuntimeException
+     * @throws \Caffeine\Exception\Console\ProcessSpawnForkFailureException
      */
     public static function create($channel, $config)
     {
-        $pipes = [];
-
-        $process = proc_open(__DIR__ . '/../bin/runtime &', [
-            ['pipe', 'r'],
-            ['pipe', 'w'],
-            ['pipe', 'w']
-        ], $pipes, null, [
-            Runtime::CHANNEL => $channel,
-            Runtime::DEBUG   => true,
-            Runtime::CONFIG  => $config
-        ]);
+        $process = self::processOpen($config, $config);
 
         if (is_resource($process)) {
             $status = proc_get_status($process);
@@ -42,6 +33,26 @@ class ProcessSpawnForkFactory
 
         }
 
-        throw new \RuntimeException('Could not create runtime');
+        throw new ProcessSpawnForkFailureException();
+    }
+
+    /**
+     * @param $channel
+     * @param $config
+     * @param array $pipes
+     * @return resource
+     */
+    private static function processOpen($channel, $config, array $pipes = [])
+    {
+        return proc_open(__DIR__ . '/../bin/runtime &', [
+            ['pipe', 'r'],
+            ['pipe', 'w'],
+            ['pipe', 'w']
+        ], $pipes, null, [
+            Runtime::CHANNEL => $channel,
+            Runtime::DEBUG   => true,
+            Runtime::CONFIG  => $config
+        ]);
+
     }
 }

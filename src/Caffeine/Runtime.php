@@ -3,14 +3,12 @@
 namespace Caffeine;
 
 use Caffeine\Exception\InvalidEnvironmentException;
-use RuntimeException;
 
 class Runtime
 {
     const CHANNEL = 'CAFFEINE_CHANNEL';
     const CONFIG  = 'CAFFEINE_CONFIG';
     const DEBUG   = 'CAFFEINE_DEBUG';
-
 
 
     /**
@@ -30,7 +28,7 @@ class Runtime
      */
     public function validateEnvironment()
     {
-        switch(true){
+        switch (true) {
             case (!isset($_SERVER[self::CHANNEL])):
                 throw new InvalidEnvironmentException(self::CHANNEL);
             case (!isset($_SERVER[self::CONFIG])):

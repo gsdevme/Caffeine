@@ -28,7 +28,7 @@ class SocketAdapter
      */
     public function write($buffer, $length = null)
     {
-        if($length === null) {
+        if ($length === null) {
             $length = strlen($buffer);
         }
 

@@ -2,8 +2,14 @@
 
 namespace Caffeine;
 
+use Caffeine\Exception\MissingConfigurationException;
+
 class Config
 {
+
+    const CONFIG_CHANNEL  = 'channel';
+    const CONFIG_USERNAME = 'username';
+    const CONFIG_OAUTH    = 'oauth';
 
     private $config;
 
@@ -13,8 +19,13 @@ class Config
      */
     public function __construct(array $config)
     {
-        if (!isset($config['channel'], $config['username'], $config['auth'])) {
-            throw new \Exception('Channel, Username & Auth must be defined in the config');
+        switch (true) {
+            case (!isset($config[self::CONFIG_CHANNEL])):
+                throw new MissingConfigurationException(self::CONFIG_CHANNEL);
+            case (!isset($config[self::CONFIG_USERNAME])):
+                throw new MissingConfigurationException(self::CONFIG_USERNAME);
+            case (!isset($config[self::CONFIG_OAUTH])):
+                throw new MissingConfigurationException(self::CONFIG_OAUTH);
         }
 
         $this->config = $config;
