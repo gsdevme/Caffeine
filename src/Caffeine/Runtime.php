@@ -2,6 +2,7 @@
 
 namespace Caffeine;
 
+use Caffeine\Exception\InvalidEnvironmentException;
 use RuntimeException;
 
 class Runtime
@@ -10,7 +11,7 @@ class Runtime
     const CONFIG  = 'CAFFEINE_CONFIG';
     const DEBUG   = 'CAFFEINE_DEBUG';
 
-    const ISSET_EXCEPTION = '%s is missing from $_SERVER';
+
 
     /**
      * @return $this
@@ -25,23 +26,26 @@ class Runtime
 
     /**
      * @return $this
-     * @throws \RuntimeException
+     * @throws Exception\InvalidEnvironmentException
      */
     public function validateEnvironment()
     {
         switch(true){
             case (!isset($_SERVER[self::CHANNEL])):
-                throw new RuntimeException(sprintf(self::ISSET_EXCEPTION, self::CHANNEL));
+                throw new InvalidEnvironmentException(self::CHANNEL);
             case (!isset($_SERVER[self::CONFIG])):
-                throw new RuntimeException(sprintf(self::ISSET_EXCEPTION, self::CONFIG));
+                throw new InvalidEnvironmentException(self::CONFIG);
             case (!isset($_SERVER[self::DEBUG])):
-                throw new RuntimeException(sprintf(self::ISSET_EXCEPTION, self::DEBUG));
+                throw new InvalidEnvironmentException(self::DEBUG);
         }
 
         return $this;
     }
 
-    public static function addErrorHandler()
+    /**
+     * @return $this
+     */
+    public function addErrorHandler()
     {
         set_error_handler(function ($errno, $errstr, $errfile, $errline) {
             throw new \ErrorException($errstr, 0, $errno, $errfile, $errline);
