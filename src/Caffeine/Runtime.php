@@ -22,16 +22,13 @@ class Runtime
 
     public function environment()
     {
-        if (!isset($_SERVER[self::CHANNEL])) {
-            throw new RuntimeException(sprintf(self::ISSET_EXCEPTION, self::CHANNEL));
-        }
-
-        if (!isset($_SERVER[self::CONFIG])) {
-            throw new RuntimeException(sprintf(self::ISSET_EXCEPTION, self::CONFIG));
-        }
-
-        if (!isset($_SERVER[self::DEBUG])) {
-            throw new RuntimeException(sprintf(self::ISSET_EXCEPTION, self::DEBUG));
+        switch(true){
+            case (!isset($_SERVER[self::CHANNEL])):
+                throw new RuntimeException(sprintf(self::ISSET_EXCEPTION, self::CHANNEL));
+            case (!isset($_SERVER[self::CONFIG])):
+                throw new RuntimeException(sprintf(self::ISSET_EXCEPTION, self::CONFIG));
+            case (!isset($_SERVER[self::DEBUG])):
+                throw new RuntimeException(sprintf(self::ISSET_EXCEPTION, self::DEBUG));
         }
 
         return $this;
