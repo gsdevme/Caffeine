@@ -1,0 +1,19 @@
+#!/usr/bin/env php
+<?php
+
+require_once realpath(__DIR__) . '/../../../vendor/autoload.php';
+
+
+$runtime = new \Caffeine\Runtime();
+$runtime
+    ->bootstrap()
+    ->environment();
+
+
+
+
+/*Caffeine\Caffeine::run(new Caffeine\Config([
+    'channel'  => 'test',
+    'username' => 'test',
+    'auth'     => 'test'
+]));*/

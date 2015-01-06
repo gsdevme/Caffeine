@@ -1,0 +1,9 @@
+.idea
+DS_Store
+composer.phar
+composer.lock
+vendor/
+coverage-caffeine/
+coverage.clover
+ocular.phar
+caffeine-*.json
