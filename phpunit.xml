@@ -10,7 +10,7 @@ convertNoticesToExceptions="true"
 convertWarningsToExceptions="true"
 processIsolation="true"
 strict="true"
-bootstrap="tests/CaffeineTest/bootstrap.php"
+bootstrap="tests/bootstrap.php"
 verbose="true">
     <logging>
         <log type="coverage-html" target="coverage-caffeine" charset="UTF-8"

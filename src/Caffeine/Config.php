@@ -36,7 +36,7 @@ class Config
      */
     public function getChannel()
     {
-        return $this->config['channel'];
+        return $this->config[self::CONFIG_CHANNEL];
     }
 
     /**
@@ -44,30 +44,14 @@ class Config
      */
     public function getUsername()
     {
-        return $this->config['username'];
+        return $this->config[self::CONFIG_USERNAME];
     }
 
     /**
      * @return string
      */
-    public function getAuth()
+    public function getOAuth()
     {
-        return $this->config['auth'];
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getLoginMessage()
-    {
-        return (isset($this->config['login-message'])) ? $this->config['login-message'] : null;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isMod()
-    {
-        return (isset($this->config['mod'])) ? $this->config['mod'] : false;
+        return $this->config[self::CONFIG_OAUTH];
     }
 }
