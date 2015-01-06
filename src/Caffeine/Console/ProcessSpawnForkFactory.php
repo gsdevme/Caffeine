@@ -22,7 +22,7 @@ class ProcessSpawnForkFactory
      */
     public static function create($channel, $config)
     {
-        $process = self::processOpen($config, $config);
+        $process = self::processOpen($channel, $config);
 
         if (is_resource($process)) {
             $status = proc_get_status($process);
