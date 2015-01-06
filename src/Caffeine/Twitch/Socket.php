@@ -17,16 +17,6 @@ class Socket
     private $config;
 
     /**
-     * Adds an error handler globly, to throw execptions for use with the socket functions
-     */
-    public static function addErrorHandler()
-    {
-        set_error_handler(function ($errno, $errstr, $errfile, $errline) {
-            throw new \ErrorException($errstr, 0, $errno, $errfile, $errline);
-        });
-    }
-
-    /**
      * This will always ensure we get a nice clean disconnect
      *
      * @param Socket $socket

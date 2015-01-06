@@ -3,10 +3,10 @@
 
 require_once realpath(__DIR__) . '/../../../vendor/autoload.php';
 
-
 $runtime = new \Caffeine\Runtime();
 $runtime
     ->bootstrap()
-    ->environment();
+    ->validateEnvironment()
+    ->addErrorHandler();
 
 sleep(300);

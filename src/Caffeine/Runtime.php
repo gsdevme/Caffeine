@@ -12,6 +12,9 @@ class Runtime
 
     const ISSET_EXCEPTION = '%s is missing from $_SERVER';
 
+    /**
+     * @return $this
+     */
     public function bootstrap()
     {
         set_time_limit(0);
@@ -20,7 +23,11 @@ class Runtime
         return $this;
     }
 
-    public function environment()
+    /**
+     * @return $this
+     * @throws \RuntimeException
+     */
+    public function validateEnvironment()
     {
         switch(true){
             case (!isset($_SERVER[self::CHANNEL])):
@@ -30,6 +37,15 @@ class Runtime
             case (!isset($_SERVER[self::DEBUG])):
                 throw new RuntimeException(sprintf(self::ISSET_EXCEPTION, self::DEBUG));
         }
+
+        return $this;
+    }
+
+    public static function addErrorHandler()
+    {
+        set_error_handler(function ($errno, $errstr, $errfile, $errline) {
+            throw new \ErrorException($errstr, 0, $errno, $errfile, $errline);
+        });
 
         return $this;
     }

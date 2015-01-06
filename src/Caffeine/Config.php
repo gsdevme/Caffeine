@@ -59,12 +59,4 @@ class Config
     {
         return (isset($this->config['mod'])) ? $this->config['mod'] : false;
     }
-
-    /**
-     * @return array
-     */
-    public function getEvents()
-    {
-        return (is_array($this->events)) ? $this->events : [];
-    }
 }

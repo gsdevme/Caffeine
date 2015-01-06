@@ -23,6 +23,9 @@ class Caffeine
         }
     }
 
+    /**
+     * usleep for 50000
+     */
     private static function sleepForZeroPointZeroPointFiveSeconds()
     {
         usleep(50000);
