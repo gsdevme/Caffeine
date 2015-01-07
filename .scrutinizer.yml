@@ -39,3 +39,6 @@ tools:
                 - 'tests/*'
                 - 'examples/*'
             paths: {  }
+    php_code_sniffer:
+        config:
+            standard: "PSR2"

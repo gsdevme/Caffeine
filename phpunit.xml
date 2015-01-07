@@ -10,7 +10,7 @@
         convertWarningsToExceptions="true"
         processIsolation="true"
         strict="true"
-        bootstrap="tests/bootstrap.php"
+        addUncoveredFilesFromWhitelist="true"
         verbose="true">
     <logging>
         <log type="coverage-html" target="coverage-caffeine" charset="UTF-8"
