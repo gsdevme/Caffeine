@@ -3,11 +3,11 @@
 namespace Caffeine\Console\Command;
 
 use Caffeine;
-use SebastianBergmann\Exporter\Exception;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console;
 use Symfony\Component\Process\Process;
+use SplFileObject;
 
 /**
  * Class Command
@@ -30,13 +30,25 @@ class ShowCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $process = new Process('ps aux | grep -i Caffeine/Console/../bin/runtime');
-        $process->run();
+        $grep = new Process('ps aux | grep -i Caffeine/Console/../bin/runtime | awk \'{print $2}, {print $8}\'');
+        $grep->run();
 
-        if(!$process->isSuccessful()){
-            throw new Exception('todo message / custom error');
+        if ($grep->isSuccessful()) {
+            $ps = new \SplTempFileObject();
+
+            $ps->setCsvControl(" ");
+            $ps->setFlags(SplFileObject::READ_CSV);
+            $ps->fwrite($grep->getOutput());
+
+            $count = 0;
+
+            foreach ($ps as $process) {
+                $count += 1;
+                var_dump($process);
+            }
+
+            $this->writeInfo($output, $count . ' Cafffeine processes are running');
+
         }
-
-        var_dump($process->getOutput());
     }
 }
