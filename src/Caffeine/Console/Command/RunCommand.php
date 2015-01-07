@@ -87,9 +87,9 @@ class RunCommand extends Command
      */
     private function createProcess($channel, $config, OutputInterface $output)
     {
-        $status = Caffeine\Console\ProcessSpawnForkFactory::create($channel, $config);
+        $pid = Caffeine\Console\ProcessSpawnForkFactory::create($channel, $config);
 
-        $this->writeInfo($output, ' -Process Spawned, PID: ' . $status['pid']);
+        $this->writeInfo($output, ' -Process Spawned, PID: ' . $pid);
     }
 
     /**

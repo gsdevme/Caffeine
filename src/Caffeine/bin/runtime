@@ -1,4 +1,4 @@
-#!/usr/bin/env php
+#!/usr/local/bin/php55
 <?php
 
 require_once realpath(__DIR__) . '/../../../vendor/autoload.php';
