@@ -2,7 +2,9 @@
 
 namespace Caffeine;
 
-use Caffeine\Exception\MissingConfigurationException;
+use Caffeine\Exception\Config\ChannelConfigurationException;
+use Caffeine\Exception\Config\OAuthConfigurationException;
+use Caffeine\Exception\Config\UsernameConfigurationException;
 
 class Config
 {
@@ -21,11 +23,11 @@ class Config
     {
         switch (true) {
             case (!isset($config[self::CONFIG_CHANNEL])):
-                throw new MissingConfigurationException(self::CONFIG_CHANNEL);
+                throw new ChannelConfigurationException();
             case (!isset($config[self::CONFIG_USERNAME])):
-                throw new MissingConfigurationException(self::CONFIG_USERNAME);
+                throw new UsernameConfigurationException();
             case (!isset($config[self::CONFIG_OAUTH])):
-                throw new MissingConfigurationException(self::CONFIG_OAUTH);
+                throw new OAuthConfigurationException();
         }
 
         $this->config = $config;
