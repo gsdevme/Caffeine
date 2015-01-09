@@ -3,8 +3,8 @@
 namespace Caffeine\Console;
 
 use Caffeine\Exception\Console\ProcessSpawnForkFailureException;
+use Caffeine\Process\Process;
 use Caffeine\Runtime;
-use Symfony\Component\Process\Process;
 
 /**
  * Creates a process, forks it, then gets information then closes it.
@@ -18,26 +18,27 @@ class ProcessSpawnForkFactory
     /**
      * @param $channel
      * @param $config
-     * @return int|null
+     * @return mixed
      * @throws \Caffeine\Exception\Console\ProcessSpawnForkFailureException
      */
     public static function create($channel, $config)
     {
         $process = new Process(__DIR__ . '/../bin/runtime &');
-        $process->setEnv([
-            Runtime::CHANNEL => $channel,
-            Runtime::DEBUG   => true,
-            Runtime::CONFIG  => $config
-        ]);
 
-        $process->start();
+        try {
+            $process->run([
+                Runtime::CHANNEL => $channel,
+                Runtime::DEBUG   => true,
+                Runtime::CONFIG  => $config
+            ]);
 
-        if($process->isRunning()){
             $pid = $process->getPid();
 
-            $process->stop(0);
+            $process->close();
 
             return $pid;
+        } catch (\RuntimeException $e) {
+
         }
 
         throw new ProcessSpawnForkFailureException();
