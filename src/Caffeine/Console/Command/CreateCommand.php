@@ -12,7 +12,7 @@ use Symfony\Component\Console;
  * Class Command
  * @package Caffeine
  */
-class RunCommand extends Command
+class CreateCommand extends Command
 {
     const WRITE_LINE_INFO    = '<info>%s</info>';
     const WRITE_LINE_COMMENT = '<comment>%s</comment>';
