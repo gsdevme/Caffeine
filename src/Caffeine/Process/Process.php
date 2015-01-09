@@ -2,8 +2,6 @@
 
 namespace Caffeine\Process;
 
-use Caffeine\Exception\Console\ProcessSpawnForkFailureException;
-
 /**
  * Had some odd issue with the Symfony process so just quickly made my own
  *

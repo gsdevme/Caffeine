@@ -3,11 +3,11 @@
 namespace Caffeine\Console\Command;
 
 use Caffeine;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console;
-use Symfony\Component\Process\Process;
 use SplFileObject;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Process\Process;
 
 /**
  * Class Command
