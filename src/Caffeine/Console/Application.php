@@ -20,6 +20,7 @@ class Application extends BaseApplication
     public function doRun(InputInterface $input, OutputInterface $output)
     {
         $this->addCommands([
+            new Command\RunCommand(),
             new Command\CreateCommand(),
             new Command\ShowCommand()
         ]);
