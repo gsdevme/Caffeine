@@ -1,6 +1,6 @@
 <?php
 
-namespace Caffeine\Exception\Console;
+namespace Caffeine\Exception\Process;
 
 class ProcessSpawnForkFailureException extends \Exception
 {

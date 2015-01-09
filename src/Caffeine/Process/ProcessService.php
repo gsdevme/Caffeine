@@ -1,9 +1,8 @@
 <?php
 
-namespace Caffeine\Console;
+namespace Caffeine\Process;
 
-use Caffeine\Exception\Console\ProcessSpawnForkFailureException;
-use Caffeine\Process\Process;
+use Caffeine\Exception\Process\ProcessSpawnForkFailureException;
 use Caffeine\Runtime;
 
 /**
@@ -12,23 +11,22 @@ use Caffeine\Runtime;
  * Class ProcessSpawnForkFactory
  * @package Caffeine\Console
  */
-class ProcessSpawnForkFactory
+class ProcessService
 {
-
     /**
+     * @param ProcessInterface $process
      * @param $channel
      * @param $config
-     * @return mixed
-     * @throws \Caffeine\Exception\Console\ProcessSpawnForkFailureException
+     * @param bool $debug
+     * @return int
+     * @throws \Caffeine\Exception\Process\ProcessSpawnForkFailureException
      */
-    public static function create($channel, $config)
+    public static function handle(ProcessInterface $process, $channel, $config, $debug = true)
     {
-        $process = new Process(__DIR__ . '/../bin/runtime &');
-
         try {
             $process->run([
                 Runtime::CHANNEL => $channel,
-                Runtime::DEBUG   => true,
+                Runtime::DEBUG   => $debug,
                 Runtime::CONFIG  => $config
             ]);
 
@@ -38,7 +36,7 @@ class ProcessSpawnForkFactory
 
             return $pid;
         } catch (\RuntimeException $e) {
-
+            // Failed to create, fall through to below exception
         }
 
         throw new ProcessSpawnForkFailureException();

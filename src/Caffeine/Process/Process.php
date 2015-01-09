@@ -7,13 +7,13 @@ namespace Caffeine\Process;
  *
  * @package Caffeine\Process
  */
-class Process
+class Process implements ProcessInterface
 {
     const STATUS_PID = 'pid';
 
-    private $command;
+    protected $command;
+    protected $pipes;
     private $resource;
-    private $pipes;
     private $status;
 
     /**
@@ -68,5 +68,4 @@ class Process
     {
         $this->status = proc_get_status($this->resource);
     }
-
 }

@@ -87,7 +87,7 @@ class CreateCommand extends Command
      */
     private function createProcess($channel, $config, OutputInterface $output)
     {
-        $pid = Caffeine\Console\ProcessSpawnForkFactory::create($channel, $config);
+        $pid = Caffeine\Process\ProcessService::handle(new Caffeine\Process\RuntimeProcess(), $channel, $config);
 
         $this->writeInfo($output, ' -Process Spawned, PID: ' . $pid);
     }
