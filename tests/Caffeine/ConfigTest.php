@@ -8,12 +8,12 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
     public function testConfigurationWithoutUsername()
     {
         $this->setExpectedException(
-            '\Caffeine\Exception\MissingConfigurationException',
-            sprintf(Exception\MissingConfigurationException::EXCEPTION_MESSAGE, Config::CONFIG_USERNAME)
+            '\Caffeine\Exception\Config\UsernameConfigurationException',
+            'username must be defined in the config'
         );
 
         new Config([
-            'oauth' => 1,
+            'oauth'   => 1,
             'channel' => 1
         ]);
     }
@@ -21,25 +21,25 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
     public function testConfigurationWithoutOAuth()
     {
         $this->setExpectedException(
-            '\Caffeine\Exception\MissingConfigurationException',
-            sprintf(Exception\MissingConfigurationException::EXCEPTION_MESSAGE, Config::CONFIG_OAUTH)
+            '\Caffeine\Exception\Config\OAuthConfigurationException',
+            'oauth must be defined in the config'
         );
 
         new Config([
             'username' => 1,
-            'channel' => 1
+            'channel'  => 1
         ]);
     }
 
     public function testConfigurationWithoutChannel()
     {
         $this->setExpectedException(
-            '\Caffeine\Exception\MissingConfigurationException',
-            sprintf(Exception\MissingConfigurationException::EXCEPTION_MESSAGE, Config::CONFIG_CHANNEL)
+            '\Caffeine\Exception\Config\ChannelConfigurationException',
+            'channel must be defined in the config'
         );
 
         new Config([
-            'oauth' => 1,
+            'oauth'    => 1,
             'username' => 1
         ]);
     }
@@ -50,8 +50,8 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
     public function testConfigurationBasic($username, $oauth, $channel)
     {
         $config = new Config([
-            Config::CONFIG_CHANNEL => $channel,
-            Config::CONFIG_OAUTH => $oauth,
+            Config::CONFIG_CHANNEL  => $channel,
+            Config::CONFIG_OAUTH    => $oauth,
             Config::CONFIG_USERNAME => $username
         ]);
 
