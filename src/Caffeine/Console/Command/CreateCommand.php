@@ -74,7 +74,7 @@ class CreateCommand extends Command
 
     /**
      * @param $channel
-     * @param $config
+     * @param string $config
      * @param OutputInterface $output
      */
     private function createProcess($channel, $config, OutputInterface $output)
