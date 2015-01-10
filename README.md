@@ -1,5 +1,7 @@
 Caffeine
 ==============
+Multi-use Twitch IRC Spawn. 
+
 
 ### Master
 [![Build Status](https://travis-ci.org/gsdevme/Caffeine.svg?branch=master)](https://travis-ci.org/gsdevme/Caffeine)
@@ -12,3 +14,5 @@ Caffeine
 [![Build Status](https://scrutinizer-ci.com/g/gsdevme/Caffeine/badges/build.png?b=develop)](https://scrutinizer-ci.com/g/gsdevme/Caffeine/build-status/develop)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/gsdevme/Caffeine/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/gsdevme/Caffeine/?branch=develop)
 [![Code Coverage](https://scrutinizer-ci.com/g/gsdevme/Caffeine/badges/coverage.png?b=develop)](https://scrutinizer-ci.com/g/gsdevme/Caffeine/?branch=develop)
+=======
+========
