@@ -12,15 +12,15 @@ class PhpFileLoader extends FileLoader
      */
     public function load($resource, $type = null)
     {
-        try{
+        try {
             $data = require $resource;
 
-            if(!$this->checkFileIsEmpty($data)){
+            if (!$this->checkFileIsEmpty($data)) {
                 return $data;
             }
 
             return [];
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             throw new \Exception('Failed to load file ' . $resource, 0, $e);
         }
     }

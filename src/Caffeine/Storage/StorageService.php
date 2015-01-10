@@ -12,9 +12,9 @@ class StorageService
 
     public function __construct(array $directories)
     {
-        $locator = new FileLocator($directories);
+        $locator        = new FileLocator($directories);
         $loaderResolver = new LoaderResolver(array(new Loader\PhpFileLoader($locator)));
-        $this->loader = new DelegatingLoader($loaderResolver);
+        $this->loader   = new DelegatingLoader($loaderResolver);
     }
 
     public function load($file)

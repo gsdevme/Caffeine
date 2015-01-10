@@ -2,7 +2,7 @@
 
 namespace Caffeine\Storage;
 
-use \Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Filesystem;
 
 class Configuration extends Filesystem implements File
 {

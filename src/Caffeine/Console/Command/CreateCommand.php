@@ -2,15 +2,12 @@
 
 namespace Caffeine\Console\Command;
 
-use Caffeine;
 use Caffeine\Storage\Configuration;
-use Symfony\Component\Config\FileLocator;
-use Symfony\Component\Config\Loader\DelegatingLoader;
-use Symfony\Component\Config\Loader\LoaderResolver;
+use Caffeine;
+use Symfony\Component\Console;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console;
 
 /**
  * Class Command
@@ -50,9 +47,9 @@ class CreateCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $channel = $input->getArgument(self::ARGUMENT_TWITCH_CHANNEL);
-        $oauth = $input->getArgument(self::ARGUMENT_OATUH_TOKEN);
-        $username = $input->getArgument(self::ARGUMENT_USERNAME);
+        $channel  = $input->getArgument(self::ARGUMENT_TWITCH_CHANNEL);
+        //$oauth    = $input->getArgument(self::ARGUMENT_OATUH_TOKEN);
+        //$username = $input->getArgument(self::ARGUMENT_USERNAME);
 
         $this->welcomeMessage($output);
         $this->writeInfo($output, ' -Twitch Channel: ' . $channel);
@@ -61,7 +58,7 @@ class CreateCommand extends Command
         $configuration = new Configuration();
         $config        = $configuration->getConfigurationFilePath($channel);
 
-        if(!$configuration->exists($channel)){
+        if (!$configuration->exists($channel)) {
             $configuration->mkdir($configuration->getFolderStoragePath($channel), 0755);
             $configuration->touch($channel);
         }
