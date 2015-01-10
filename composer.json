@@ -15,6 +15,6 @@
     },
 	"require": {
 		"symfony/console": "2.6",
-		"symfony/process": "2.6"
+		"symfony/config": "2.6"
 	}
 }

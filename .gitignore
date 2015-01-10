@@ -6,4 +6,4 @@ vendor/
 coverage-caffeine/
 coverage.clover
 ocular.phar
-caffeine-*.json
+.caffeine-data-*

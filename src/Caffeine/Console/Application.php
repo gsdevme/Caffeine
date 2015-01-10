@@ -14,6 +14,10 @@ class Application extends BaseApplication
 {
     public function __construct($version)
     {
+        set_error_handler(function ($errno, $errstr, $errfile, $errline) {
+            throw new \ErrorException($errstr, 0, $errno, $errfile, $errline);
+        });
+
         parent::__construct('Caffeine', $version);
     }
 

@@ -30,6 +30,18 @@ TITLE;
         $this->writeComment($output, self::TITLE);
     }
 
+
+    /**
+     * @param array $arguments
+     * @param int $type
+     */
+    protected function addArguments(array $arguments, $type = Console\Input\InputArgument::REQUIRED)
+    {
+        foreach ($arguments as $argument) {
+            $this->addArgument($argument[0], $type, $argument[1]);
+        }
+    }
+
     /**
      * @param OutputInterface $output
      * @param string $buffer
