@@ -1,7 +1,22 @@
-Caffeine
+WIP: Caffeine
 ==============
-Multi-use Twitch IRC Spawn. 
+Multi-use Twitch IRC Bot.
 
+```
+Caffeine version 0.1-dev
+
+Usage:
+ [options] command [arguments]
+
+Options:
+ --version (-V) Display this application version.
+
+Available commands:
+ create   Creates a config & spawns a Caffeine bot into the background.
+ list     Lists commands
+ run      Spawns a Caffeine bot into the background.
+ show     Shows all the currently running Caffeine bots.
+ ```
 
 ### Master
 [![Build Status](https://travis-ci.org/gsdevme/Caffeine.svg?branch=master)](https://travis-ci.org/gsdevme/Caffeine)
