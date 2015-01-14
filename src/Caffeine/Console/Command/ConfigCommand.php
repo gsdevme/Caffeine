@@ -3,13 +3,13 @@
 namespace Caffeine\Console\Command;
 
 use Caffeine\Storage\Configuration;
+use DateTimeZone;
+use Symfony\Component\Console\Helper\HelperInterface;
+use Symfony\Component\Console\Helper\HelperSet;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Helper\HelperInterface;
-use Symfony\Component\Console\Helper\HelperSet;
 use Symfony\Component\Console\Question\Question;
-use DateTimeZone;
 
 /**
  * Class Command
