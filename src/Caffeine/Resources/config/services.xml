@@ -12,8 +12,7 @@
         <service id="symfony.component.console.helper.question_helper"
                  class="Symfony\Component\Console\Helper\QuestionHelper"/>
 
-        <service id="caffeine.console.command.config.helper_set" class="Symfony\Component\Console\Helper\HelperSet">
-            <argument type="service" id="caffeine.console.command.config.helper_set.parameters"/>
-        </service>
+        <service id="symfony.component.console.helper.helper_set"
+                 class="Symfony\Component\Console\Helper\HelperSet"/>
     </services>
 </container>
