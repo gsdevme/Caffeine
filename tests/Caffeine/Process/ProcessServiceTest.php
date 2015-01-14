@@ -29,7 +29,8 @@ class ProcessServiceTest extends \PHPUnit_Framework_TestCase
             ->method('close');
 
         /** @var \Caffeine\Process\ProcessInterface $mock */
-        $result = ProcessService::handle($mock, 'channel-test', 'config-file-test');
+        $processService = new ProcessService();
+        $result = $processService->handle($mock, 'channel-test', 'config-file-test');
 
         $this->assertEquals(42, $result);
     }
