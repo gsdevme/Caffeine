@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="caffeine.command.run" class="Caffeine\Console\Command\RunCommand">
+            <argument type="string">caffeine:run</argument>
+            <argument type="service" id="caffeine.process.runtime"/>
+            <argument type="service" id="caffeine.process.process_service"/>
+            <tag name="caffeine.command"/>
+        </service>
+
+        <service id="caffeine.command.show" class="Caffeine\Console\Command\ShowCommand">
+            <argument type="string">caffeine:show</argument>
+            <tag name="caffeine.command"/>
+        </service>
+
+        <service id="caffeine.command.config" class="Caffeine\Console\Command\ConfigCommand">
+            <argument type="string">caffeine:config</argument>
+            <argument type="service" id="caffeine.storage.configuration"/>
+            <tag name="caffeine.command"/>
+        </service>
+    </services>
+</container>

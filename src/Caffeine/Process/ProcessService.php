@@ -21,7 +21,7 @@ class ProcessService
      * @return int
      * @throws \Caffeine\Exception\Process\ProcessSpawnForkFailureException
      */
-    public static function handle(ProcessInterface $process, $channel, $config, $debug = true)
+    public function handle(ProcessInterface $process, $channel, $config, $debug = true)
     {
         try {
             $process->run([

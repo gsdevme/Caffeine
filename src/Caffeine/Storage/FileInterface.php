@@ -2,7 +2,7 @@
 
 namespace Caffeine\Storage;
 
-interface File
+interface FileInterface
 {
     /**
      * @param $v

@@ -11,25 +11,16 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 abstract class Command extends Console\Command\Command
 {
-    const TITLE = <<<TITLE
- #####################################
- # Caffeine Twitch IRC Bot           #
- # --------------------------------- #
- #                                   #
- # Created by: Gavin Staniforth      #
- # For use with Twitch.tv            #
- #####################################
-
-TITLE;
-
     const WRITE_LINE_INFO    = '<info>%s</info>';
     const WRITE_LINE_COMMENT = '<comment>%s</comment>';
 
-    protected function welcomeMessage(OutputInterface $output)
+    /**
+     * @inheritdoc
+     */
+    public function __construct($name)
     {
-        $this->writeComment($output, self::TITLE);
+        parent::__construct($name);
     }
-
 
     /**
      * @param array $arguments
