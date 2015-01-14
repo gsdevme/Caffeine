@@ -20,11 +20,22 @@ class ConfigCommand extends Command
     const ARGUMENT_TIMEZONE       = 'timezone';
     const ARGUMENT_ADMIN_USERS    = 'admin-users';
 
-    private $configuration;
+    const QUESTION_OAUTH = 'Please enter the OAuth token for the bot';
 
-    public function __construct($name, FileInterface $configuration)
+    private $configuration;
+    private $questionHelper;
+
+    /**
+     * @param null|string $name
+     * @param FileInterface $configuration
+     * @param Console\Helper\HelperInterface $questionHelper
+     */
+    public function __construct($name, FileInterface $configuration, Console\Helper\HelperInterface $questionHelper)
     {
         $this->configuration = $configuration;
+        $this->questionHelper = $questionHelper;
+
+        $this->setHelperSet($questionHelper);
 
         parent::__construct($name);
     }
@@ -48,6 +59,8 @@ class ConfigCommand extends Command
             [self::ARGUMENT_ADMIN_USERS, 'List of admin users which can add commands'],
             [self::ARGUMENT_TIMEZONE, 'Timezone i.e. (Europe/London)'],
         ], InputArgument::OPTIONAL);
+
+        $this->questionHelper = $this->getHelper('question');
     }
 
     /**
@@ -60,13 +73,9 @@ class ConfigCommand extends Command
         $this->writeInfo($output, ' -Twitch Channel: ' . $channel);
         $this->setProcessTitle('Caffeine-' . $channel);
 
-        $configuration = $this->configService($channel, $output);
+        //$this->configService($channel, $output);
 
-        $oauth = $input->getArgument(self::ARGUMENT_OATUH_TOKEN);
-
-        if ($oauth === null) {
-
-        }
+        //$oauth = $this->getOptionalOrPrompt($input, $output, self::ARGUMENT_OATUH_TOKEN, self::QUESTION_OAUTH);
 
         //$username = $input->getArgument(self::ARGUMENT_USERNAME);
 
@@ -74,10 +83,20 @@ class ConfigCommand extends Command
         //$data = $storage->load($configuration->getConfigurationFilePath($channel));
     }
 
+    private function getOptionalOrPrompt(InputInterface $input, OutputInterface $output, $name, $question)
+    {
+        $argument = $input->getArgument($name);
+
+        if($argument === null){
+            $argument = $this->questionHelper->ask($input, $output, new Console\Question\Question($question));
+        }
+
+        return $argument;
+    }
+
     /**
      * @param $channel
      * @param OutputInterface $output
-     * @return Configuration
      */
     private function configService($channel, OutputInterface $output)
     {

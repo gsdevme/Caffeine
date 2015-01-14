@@ -8,5 +8,12 @@
         <service id="caffeine.process.runtime" class="Caffeine\Process\RuntimeProcess"/>
 
         <service id="caffeine.storage.configuration" class="Caffeine\Storage\Configuration"/>
+
+        <service id="symfony.component.console.helper.question_helper"
+                 class="Symfony\Component\Console\Helper\QuestionHelper"/>
+
+        <service id="caffeine.console.command.config.helper_set" class="Symfony\Component\Console\Helper\HelperSet">
+            <argument type="service" id="caffeine.console.command.config.helper_set.parameters"/>
+        </service>
     </services>
 </container>

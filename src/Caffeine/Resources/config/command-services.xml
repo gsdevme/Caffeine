@@ -19,6 +19,7 @@
         <service id="caffeine.command.config" class="Caffeine\Console\Command\ConfigCommand">
             <argument type="string">caffeine:config</argument>
             <argument type="service" id="caffeine.storage.configuration"/>
+            <argument type="service" id="symfony.component.console.helper.question_helper"/>
             <tag name="caffeine.command"/>
         </service>
     </services>
