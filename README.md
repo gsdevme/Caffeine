@@ -3,6 +3,14 @@ WIP: Caffeine
 Multi-use Twitch IRC Bot.
 
 ```
+ #####################################
+ # Caffeine Twitch IRC Bot           #
+ # --------------------------------- #
+ #                                   #
+ # Created by: Gavin Staniforth      #
+ # For use with Twitch.tv            #
+ #####################################
+
 Caffeine version 0.1-dev
 
 Usage:
@@ -12,10 +20,12 @@ Options:
  --version (-V) Display this application version.
 
 Available commands:
- create   Creates a config & spawns a Caffeine bot into the background.
- list     Lists commands
- run      Spawns a Caffeine bot into the background.
- show     Shows all the currently running Caffeine bots.
+ help              Displays help for a command
+ list              Lists commands
+caffeine
+ caffeine:config   Create/Edit a config for caffeine bot.
+ caffeine:run      Spawns a Caffeine bot into the background.
+ caffeine:show     Shows all the currently running Caffeine bots.
  ```
 
 ### Master
