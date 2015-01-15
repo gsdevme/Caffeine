@@ -39,8 +39,7 @@ class ConfigCommand extends Command
         $name,
         Configuration $configuration,
         HelperInterface $questionHelper,
-        HelperSet $helperSet
-    )
+        HelperSet $helperSet)
     {
         $this->configuration = $configuration;
 
