@@ -98,9 +98,9 @@ class ConfigCommand extends Command
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @param $name
-     * @param $question
-     * @param null $default
+     * @param string $name
+     * @param string $question
+     * @param string $default
      * @return mixed|string
      */
     private function getOptionalOrPrompt(InputInterface $input, OutputInterface $output, $name, $question, $default = null)
