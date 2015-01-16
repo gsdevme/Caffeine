@@ -19,7 +19,6 @@ class Application extends SymfonyApplication
  # Caffeine Twitch IRC Bot           #
  # --------------------------------- #
  #                                   #
- # Created by: Gavin Staniforth      #
  # For use with Twitch.tv            #
  #####################################
 
