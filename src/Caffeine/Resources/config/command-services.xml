@@ -6,7 +6,7 @@
     <services>
         <service id="caffeine.command.run" class="Caffeine\Console\Command\RunCommand">
             <argument type="string">caffeine:run</argument>
-            <argument type="service" id="caffeine.process.runtime"/>
+            <argument type="service" id="caffeine.process.runtime.runtime_process"/>
             <argument type="service" id="caffeine.process.process_service"/>
             <tag name="caffeine.command"/>
         </service>
@@ -17,10 +17,12 @@
         </service>
 
         <service id="caffeine.command.config" class="Caffeine\Console\Command\ConfigCommand">
-            <argument type="string">caffeine:config</argument>
             <argument type="service" id="caffeine.storage.configuration"/>
             <argument type="service" id="symfony.component.console.helper.question_helper"/>
             <argument type="service" id="symfony.component.console.helper.helper_set"/>
+            <argument type="service" id="caffeine.console.command.question.username_question"/>
+            <argument type="service" id="caffeine.console.command.question.oauth_question"/>
+            <argument type="service" id="caffeine.console.command.question.timezone_question"/>
             <tag name="caffeine.command"/>
         </service>
     </services>

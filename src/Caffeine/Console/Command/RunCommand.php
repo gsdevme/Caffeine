@@ -3,10 +3,10 @@
 namespace Caffeine\Console\Command;
 
 use Caffeine;
-use Symfony\Component\Console;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console;
 
 /**
  * Class Command
@@ -17,7 +17,7 @@ class RunCommand extends Command
     private $runtimeProcess;
     private $processService;
 
-    public function __construct($name, Caffeine\Process\RuntimeProcess $runtime, Caffeine\Process\ProcessService $processService)
+    public function __construct($name, Caffeine\Process\Runtime\RuntimeProcess $runtime, Caffeine\Process\ProcessService $processService)
     {
         $this->runtimeProcess = $runtime;
         $this->processService = $processService;

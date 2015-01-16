@@ -1,8 +1,8 @@
 <?php
 
-namespace Caffeine\Process;
+namespace Caffeine\Process\Runtime;
 
-class RuntimeProcess extends Process
+class RuntimeProcess extends \Caffeine\Process\Process
 {
     const COMMAND = '%s/../bin/runtime &';
 
