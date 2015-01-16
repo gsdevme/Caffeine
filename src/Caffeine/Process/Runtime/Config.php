@@ -1,10 +1,6 @@
 <?php
 
-namespace Caffeine;
-
-use Caffeine\Exception\Config\ChannelConfigurationException;
-use Caffeine\Exception\Config\OAuthConfigurationException;
-use Caffeine\Exception\Config\UsernameConfigurationException;
+namespace Caffeine\Process\Runtime;
 
 class Config
 {
@@ -21,16 +17,6 @@ class Config
      */
     public function __construct(array $config)
     {
-        switch (true) {
-            case (!isset($config[self::CONFIG_CHANNEL])):
-                throw new ChannelConfigurationException();
-            case (!isset($config[self::CONFIG_USERNAME])):
-                throw new UsernameConfigurationException();
-            case (!isset($config[self::CONFIG_OAUTH])):
-                throw new OAuthConfigurationException();
-        }
-
-        $this->config = $config;
     }
 
     /**
