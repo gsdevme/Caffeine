@@ -15,14 +15,6 @@ abstract class Command extends Console\Command\Command
     const WRITE_LINE_COMMENT = '<comment>%s</comment>';
 
     /**
-     * @inheritdoc
-     */
-    public function __construct($name)
-    {
-        parent::__construct($name);
-    }
-
-    /**
      * @param array $arguments
      * @param int $type
      */
