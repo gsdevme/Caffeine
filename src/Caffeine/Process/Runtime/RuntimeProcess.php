@@ -4,7 +4,7 @@ namespace Caffeine\Process\Runtime;
 
 class RuntimeProcess extends \Caffeine\Process\Process
 {
-    const COMMAND = '%s/../bin/runtime &';
+    const COMMAND = '%s/../../bin/runtime &';
 
     public function __construct()
     {

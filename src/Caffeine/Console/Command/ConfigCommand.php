@@ -4,6 +4,7 @@ namespace Caffeine\Console\Command;
 
 use Caffeine\Console\Command\Question\QuestionInterface;
 use Caffeine\Storage\Configuration;
+use Caffeine\Storage\PhpFilePublisher;
 use Caffeine\Storage\StorageService;
 use Symfony\Component\Console\Helper\HelperInterface;
 use Symfony\Component\Console\Helper\HelperSet;
@@ -14,15 +15,15 @@ use Symfony\Component\Console\Question\Question;
 
 class ConfigCommand extends Command
 {
-    const ARGUMENT_TWITCH_CHANNEL = 'twitch-channel-name';
-
     private $configuration;
+    private $phpFilePublisher;
     private $usernameQuestion;
     private $timezoneQuestion;
     private $oauthQuestion;
 
     public function __construct(
         Configuration $configuration,
+        PhpFilePublisher $phpFilePublisher,
         HelperInterface $questionHelper,
         HelperSet $helperSet,
         QuestionInterface $usernameQuestion,
@@ -30,6 +31,7 @@ class ConfigCommand extends Command
         QuestionInterface $timezoneQuestion)
     {
         $this->configuration    = $configuration;
+        $this->phpFilePublisher = $phpFilePublisher;
         $this->usernameQuestion = $usernameQuestion;
         $this->oauthQuestion    = $oauthQuestion;
         $this->timezoneQuestion = $timezoneQuestion;
@@ -66,15 +68,27 @@ class ConfigCommand extends Command
         $storage = new StorageService([$this->configuration->getCurrentWorkingDirectory()]);
         $data    = $storage->load($this->configuration->getConfigurationFilePath($channel));
 
-        $config = new \Caffeine\Process\Runtime\Config($data);
+        $coreConfig = new \Caffeine\Process\Runtime\CoreConfig();
 
-        $username = $this->askQuestion($input, $output, $this->usernameQuestion, $config->getUsername());
-        $oauth    = $this->askQuestion($input, $output, $this->oauthQuestion);
-        $timezone = $this->askQuestion($input, $output, $this->timezoneQuestion);
+        if(isset($data['username'])){
+            $coreConfig->setUsername($data['username']);
+        }
 
-        $this->writeInfo($output, ' -OAuth Token: ' . $oauth);
-        $this->writeInfo($output, ' -Username: ' . $username);
-        $this->writeInfo($output, ' -Timezone: ' . $timezone->getName());
+        if(isset($data['oauth'])){
+            $coreConfig->setOAuth($data['oauth']);
+        }
+
+        $coreConfig->setChannel($channel);
+
+        $coreConfig->setUsername((string)$this->askQuestion($input, $output, $this->usernameQuestion, $coreConfig->getUsername()));
+        $coreConfig->setOAuth((string)$this->askQuestion($input, $output, $this->oauthQuestion, $coreConfig->getOAuth()));
+        $coreConfig->setTimezone($this->askQuestion($input, $output, $this->timezoneQuestion), $coreConfig->getTimezone());
+
+        $this->writeInfo($output, ' -OAuth Token: ' . $coreConfig->getOAuth());
+        $this->writeInfo($output, ' -Username: ' . $coreConfig->getUsername());
+        $this->writeInfo($output, ' -Timezone: ' . $coreConfig->getTimezone()->getName());
+
+        $this->phpFilePublisher->write($this->configuration->getConfigurationFilePath($channel), $coreConfig->toArray());
     }
 
     private function askQuestion(InputInterface $input, OutputInterface $outputInterface, QuestionInterface $questionBuilder, $default = null)
@@ -82,7 +96,7 @@ class ConfigCommand extends Command
         /** @var \Symfony\Component\Console\Helper\QuestionHelper $helper */
         $helper = $this->getHelper('question');
 
-        $question = new Question($questionBuilder->getQuestion(), $default);
+        $question = new Question($questionBuilder->getQuestion($default), $default);
         $question->setValidator($questionBuilder->getValidator());
 
         return $helper->ask($input, $outputInterface, $question);

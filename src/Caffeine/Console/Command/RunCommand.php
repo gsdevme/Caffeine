@@ -16,13 +16,18 @@ class RunCommand extends Command
 {
     private $runtimeProcess;
     private $processService;
+    private $configuration;
 
-    public function __construct($name, Caffeine\Process\Runtime\RuntimeProcess $runtime, Caffeine\Process\ProcessService $processService)
+    public function __construct(
+        Caffeine\Storage\Configuration $configuration,
+        Caffeine\Process\Runtime\RuntimeProcess $runtime,
+        Caffeine\Process\ProcessService $processService)
     {
         $this->runtimeProcess = $runtime;
         $this->processService = $processService;
+        $this->configuration  = $configuration;
 
-        parent::__construct($name);
+        parent::__construct();
     }
 
     /**
@@ -31,12 +36,12 @@ class RunCommand extends Command
     protected function configure()
     {
         $this
-            ->setDescription('Spawns a Caffeine bot into the background.')
-            ->addArgument(
-                'config',
-                InputArgument::REQUIRED,
-                'Twitch Channel'
-            );
+            ->setName('caffeine:run')
+            ->setDescription('Spawns a Caffeine bot into the background.');
+
+        $this->addArguments([
+            [self::ARGUMENT_TWITCH_CHANNEL, 'Twitch Channel']
+        ], InputArgument::REQUIRED);
     }
 
     /**
@@ -44,10 +49,18 @@ class RunCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        //$pid = $this->createProcess('azimiwow', $config, $output);
+        $channel = $input->getArgument(self::ARGUMENT_TWITCH_CHANNEL);
 
-        //$this->writeInfo($output, ' -Process Spawned, PID: ' . $pid);
+        try{
+            $storage = new Caffeine\Storage\StorageService([$this->configuration->getCurrentWorkingDirectory()]);
+            $data    = $storage->load($this->configuration->getConfigurationFilePath($channel));
 
-        //$this->processService->handle($this->runtimeProcess, $channel, $config);
+            $coreConfig = new \Caffeine\Process\Runtime\CoreConfig($data);
+
+            $this->processService->handle($this->runtimeProcess, $coreConfig->getChannel(), $this->configuration->getConfigurationFilePath($channel));
+        }catch (\Exception $e){
+            var_dump($e->getFile());
+            var_dump($e->getLine());
+        }
     }
 }

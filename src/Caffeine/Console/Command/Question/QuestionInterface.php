@@ -6,5 +6,5 @@ interface QuestionInterface
 {
     public function getValidator();
 
-    public function getQuestion();
+    public function getQuestion($default);
 }

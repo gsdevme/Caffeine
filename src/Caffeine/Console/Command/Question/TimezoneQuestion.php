@@ -25,8 +25,8 @@ class TimezoneQuestion implements QuestionInterface
         };
     }
 
-    public function getQuestion()
+    public function getQuestion($default = null)
     {
-        return '<question>Please enter the Timezone for the bot/stream[Europe/London]: </question>';
+        return sprintf('<question>Please enter the Timezone for the bot/stream[%s]: </question>', $default);
     }
 }

@@ -13,6 +13,9 @@
         <service id="caffeine.console.command.question.oauth_question"
                  class="Caffeine\Console\Command\Question\OauthQuestion"/>
 
+        <service id="caffeine.storage.php_file_publisher"
+                 class="Caffeine\Storage\PhpFilePublisher"/>
+
         <service id="caffeine.process.process_service" class="Caffeine\Process\ProcessService"/>
         <service id="caffeine.process.runtime.runtime_process" class="Caffeine\Process\Runtime\RuntimeProcess"/>
 

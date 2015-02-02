@@ -13,11 +13,13 @@ class UsernameQuestion implements QuestionInterface
             if (strlen($value) <= 0) {
                 throw new Exception('value must not be empty.');
             }
+
+            return $value;
         };
     }
 
-    public function getQuestion()
+    public function getQuestion($default = null)
     {
-        return '<question>Please enter the username for the bot [%s]: </question>';
+        return sprintf('<question>Please enter the username for the bot [%s]: </question>', $default);
     }
 }

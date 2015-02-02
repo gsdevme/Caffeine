@@ -14,6 +14,8 @@ abstract class Command extends Console\Command\Command
     const WRITE_LINE_INFO    = '<info>%s</info>';
     const WRITE_LINE_COMMENT = '<comment>%s</comment>';
 
+    const ARGUMENT_TWITCH_CHANNEL = 'twitch-channel-name';
+
     /**
      * @param array $arguments
      * @param int $type
